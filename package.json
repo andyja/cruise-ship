@@ -1,0 +1,22 @@
+{
+  "name": "cruise-ship",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "jest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andyja/cruise-ship.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andyja/cruise-ship/issues"
+  },
+  "homepage": "https://github.com/andyja/cruise-ship#readme"
+}
