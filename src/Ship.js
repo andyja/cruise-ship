@@ -1,5 +1,5 @@
-class Ship {
-    constructor() {
-      this.name = 'Shippy';
-    }
-  }
+function Ship() {
+    this.startingPort = 'Dover'
+}
+
+module.exports = Ship;
