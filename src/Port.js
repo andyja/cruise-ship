@@ -1,3 +1,5 @@
-function Port() {
-    this.name = 'Dover'
+function Port(startingPortName) {
+    this.name = startingPortName;
 }
+
+module.exports = Port;
