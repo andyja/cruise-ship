@@ -7,16 +7,16 @@ describe('Ship', () => {
     });
     it('has a starting port', () => {
         const ship = new Ship('Dover');
-
         expect(ship.startingPort).toBe('Dover');
     })
     });
     describe('Set sail', () => {
+      it('has a method called set sail', () => {
+        const ship = new Ship("Dover");
+        expect(ship.setSail).toBeInstanceOf(Function);
+      })
     xit('can set sail', () => {
-        const ship = new Ship('Dover');
-
         ship.setSail();
-
         expect(ship.startingPort).toBeFalsy();
 }); 
     })
