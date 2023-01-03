@@ -15,7 +15,8 @@ describe('Ship', () => {
         const ship = new Ship("Dover");
         expect(ship.setSail).toBeInstanceOf(Function);
       })
-    xit('can set sail', () => {
+    it('can set sail', () => {
+        const ship = new Ship("Dover")
         ship.setSail();
         expect(ship.startingPort).toBeFalsy();
 }); 
