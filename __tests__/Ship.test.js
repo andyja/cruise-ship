@@ -5,7 +5,7 @@ describe('Ship', () => {
     it('can be instantiated', () => {
         expect(new Ship()).toBeInstanceOf(Object);
     });
-    xit('has a starting port', () => {
+    it('has a starting port', () => {
         const ship = new Ship('Dover');
 
         expect(ship.startingPort).toBe('Dover');
