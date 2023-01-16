@@ -1,5 +1,7 @@
-function Port(startingPortName) {
-    this.name = startingPortName;
+class Port {
+    constructor (name) {
+    this.name = name;
+}
 }
 
 module.exports = Port;
