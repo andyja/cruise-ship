@@ -1,8 +1,5 @@
 /* globals describe it expect */
-// const { expect } = require('expect');
-// const { it } = require('jest-circus');
-// const { expect } = require('expect');
-// const { beforeEach, it } = require('jest-circus');
+const Ship = require('../src/Ship.js');
 const Port = require('../src/Port.js');
 
 describe('Port', () => {
