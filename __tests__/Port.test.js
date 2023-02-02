@@ -3,17 +3,14 @@ const Ship = require('../src/Ship.js');
 const Port = require('../src/Port.js');
 
 describe('Port', () => {
-    let port;
-    beforeEach(() => {
-        port = new Port('Calais')
+    it('is an object', () => {
+        expect(new Port).toBeInstanceOf(Object);
     });
-    xit('is an object', () => {
-        expect(port).toBeInstanceOf(Object);
-    });
-    xit('can be instantiated', () => {
+    it('can be instantiated', () => {
         expect(new Port()).toBeInstanceOf(Object);
     });
-    xit('has a name Calais', () =>{
+    it('sets a name', () =>{
+        const port = new Port('Calais')
         expect(port.name).toEqual('Calais');
     })
     });
