@@ -5,7 +5,7 @@ function Ship(name) {
             this.currentPort = false;
         }
     }
-    this.dock = function () {
+    this.dock = function (port) {
         this.currentPort = port;
     }
  };

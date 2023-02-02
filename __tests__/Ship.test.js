@@ -29,4 +29,13 @@ describe('Ship', () => {
         const ship = new Ship();
         expect(ship.dock).toBeInstanceOf(Function);
       })
+      it('can dock at a different port', () => {
+        const dover = new Port('Dover');
+        const ship = new Ship();
+
+        const calais = new Port('Calais');
+        ship.dock(calais);
+
+        expect(ship.currentPort).toBe(calais);
+      })
     })
