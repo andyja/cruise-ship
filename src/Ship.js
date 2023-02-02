@@ -5,5 +5,8 @@ function Ship(name) {
             this.currentPort = false;
         }
     }
+    this.dock = function () {
+        this.currentPort = port;
+    }
  };
 module.exports = Ship;
