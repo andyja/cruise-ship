@@ -1,5 +1,6 @@
 /* globals describe it expect */
 const Ship = require('../src/Ship.js');
+const Port = require('../src/Port.js');
 
 describe('Ship', () => {
     it('can be instantiated', () => {
@@ -7,7 +8,7 @@ describe('Ship', () => {
     });
     it('has a starting port', () => {
         const ship = new Ship('Dover');
-        expect(ship.startingPort).toBe('Dover');
+        expect(ship.startingPort).toBe(port.name);
     })
     });
     describe('Set sail', () => {
