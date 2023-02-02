@@ -7,18 +7,22 @@ describe('Ship', () => {
         expect(new Ship()).toBeInstanceOf(Object);
     });
     it('has a starting port', () => {
-        const ship = new Ship('Dover');
-        expect(ship.startingPort).toBe(port.name);
+        const port = new Port('Dover');
+        const ship = new Ship(port)
+        expect(ship.currentPort).toBe(port);
     })
     });
     describe('Set sail', () => {
       it('has a method called set sail', () => {
-        const ship = new Ship("Dover");
+        const ship = new Ship();
         expect(ship.setSail).toBeInstanceOf(Function);
       })
+
+
     it('can set sail', () => {
-        const ship = new Ship("Dover")
+      const port = new Port('Dover');  
+      const ship = new Ship(port);
         ship.setSail();
-        expect(ship.startingPort).toBeTruthy();
+        expect(ship.currentPort).toBeFalsy();
 }); 
     })

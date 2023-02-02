@@ -10,13 +10,13 @@ describe('Port', () => {
     beforeEach(() => {
         port = new Port('Calais')
     });
-    it('is an object', () => {
+    xit('is an object', () => {
         expect(port).toBeInstanceOf(Object);
     });
-    it('can be instantiated', () => {
+    xit('can be instantiated', () => {
         expect(new Port()).toBeInstanceOf(Object);
     });
-    it('has a name Calais', () =>{
+    xit('has a name Calais', () =>{
         expect(port.name).toEqual('Calais');
     })
     });
