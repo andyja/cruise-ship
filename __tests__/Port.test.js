@@ -10,7 +10,7 @@ describe('Port', () => {
         expect(new Port()).toBeInstanceOf(Object);
     });
     it('sets a name', () =>{
-        const port = new Port('Calais')
-        expect(port.name).toEqual('Calais');
+        const port = new Port('Hull')
+        expect(port.name).toEqual('Hull');
     })
     });
