@@ -1,5 +1,7 @@
-function Ship(name) {
-    this.currentPort = name;
+class Ship(port, name, weight) {
+    this.port = port;
+    this.name = name;
+    this.weight = weight;
     this.setSail = function () {
         if (this.setSail) {
             this.currentPort = false;
