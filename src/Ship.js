@@ -1,3 +1,4 @@
+(function exportShip() {
 class Ship { 
     constructor(itinerary){
     this.itinerary = itinerary;
@@ -8,24 +9,27 @@ class Ship {
     
     setSail(){
         const itinerary = this.itinerary;
-        const currentPorkIndex = itinerary.ports.indexOf(this.currentPort);
-
-        if (currentPortIndex === (itinerary.porrts.length)-1) {
+        this.currentPort.removeShip(this);
+        if (this.currentPort === itinerary.ports[itinerary.ports.length -1]) {
     throw new Error ("End of journery")
 }
 
 this.previousPort = this.currentPort;
 this.currentPort = null;
-this.previousPort.removeShip(this);
+
 };
 
 dock() {
     const itinerary = this.itinerary;
     const previousPortIndex = itinerary.ports.indexOf(this.previousPort);
-
-    this.currentPort = itinerary.ports[previousPortIndex + 1]
+    this.currentPort = itinerary.ports[previousPortIndex + 1];
     this.currentPort.addShip(this);
 };
 };
 
-module.exports = Ship;
+if(typeof module !== 'undefined' && module.exports){
+    module.exports = Ship;
+    } else {
+        window.Ship = Ship;
+    }
+})();
