@@ -28,10 +28,10 @@
         <div class="header-column">
             <div>
             <p id="port-instructions">Please enter three ports</p>
-            <div id="port-list"></div>
+            <ul id="port-list"></ul>
             </div>
             </div>
-    </div>
+        </div>
     <div id="headsUpBoard">Itinerary:</div>
     <div id="mainContainer">
     <div id="viewport">
@@ -50,26 +50,54 @@
 
     const itinerary = new Itinerary([]);
     const addPortButton = document.querySelector("#addPort");
+    
     let listIsAdded = false;
 
-    function showUserPorts(port) {
+// function showUserPorts(port) {
+//   const portInstructions = document.querySelector("#port-instructions");
+//   const portList = document.querySelector("#port-list");
+
+//   const ul = portList.querySelector("ul") || document.createElement("ul");
+//   ul.innerHTML = "";
+
+//   portInstructions.textContent = `Please enter ${maxPorts - itinerary.ports.length} more ports.`;
+
+//   const li = document.createElement("li");
+//   li.textContent = `Port: ${port}`;
+
+//   ul.appendChild(li);
+
+//   if (!listIsAdded) {
+//     portList.appendChild(ul);
+//     listIsAdded = true;
+//   }
+// }
+
+function showUserPorts(port) {
   const portInstructions = document.querySelector("#port-instructions");
   const portList = document.querySelector("#port-list");
 
   const ul = portList.querySelector("ul") || document.createElement("ul");
-  ul.innerHTML = "";
-
-  portInstructions.textContent = `Please enter ${maxPorts - itinerary.ports.length} more ports.`;
-
+  
   const li = document.createElement("li");
-  li.textContent = `Port: ${port}`;
+  li.textContent = `Port: ${port.toUpperCase()}`;
   ul.appendChild(li);
 
-  if (!listIsAdded) {
-    portList.appendChild(ul);
-    listIsAdded = true;
+  // Append the updated list to the portList element
+  portList.appendChild(ul);
+
+  // Update the port instructions based on how many more ports need to be entered
+  const remainingPorts = maxPorts - itinerary.ports.length;
+  if (remainingPorts > 0) {
+    portInstructions.textContent = `Please enter ${remainingPorts} more ${remainingPorts === 1 ? "port" : "ports"}.`;
+  } else {
+    portInstructions.textContent = "All ports have been entered, please press done and then set sail";
   }
 }
+
+
+
+
 
     addPortButton.addEventListener("click", function(event) {
     const newPort = document.querySelector("#newPortName");
