@@ -21,7 +21,6 @@
                 <label>Add Ports</label><br></br>
                 <input type="text" id="newPortName" placeholder="....type a port name here"><br></br>
                 <button type="button" class="btn" id="addPort">add</button>
-                <button type="button" class="btn" id="noMorePorts">done</button><br></br>
                 <button type="button" class="btn" id="reloadPage">Reset itinerary</button>
             </form>
         </div>
@@ -48,91 +47,69 @@
 <script>
     const maxPorts = 3;
 
-    const itinerary = new Itinerary([]);
-    const addPortButton = document.querySelector("#addPort");
-    
-    let listIsAdded = false;
+const itinerary = new Itinerary([]);
+const addPortButton = document.querySelector("#addPort");
 
-// function showUserPorts(port) {
-//   const portInstructions = document.querySelector("#port-instructions");
-//   const portList = document.querySelector("#port-list");
-
-//   const ul = portList.querySelector("ul") || document.createElement("ul");
-//   ul.innerHTML = "";
-
-//   portInstructions.textContent = `Please enter ${maxPorts - itinerary.ports.length} more ports.`;
-
-//   const li = document.createElement("li");
-//   li.textContent = `Port: ${port}`;
-
-//   ul.appendChild(li);
-
-//   if (!listIsAdded) {
-//     portList.appendChild(ul);
-//     listIsAdded = true;
-//   }
-// }
+let listIsAdded = false;
 
 function showUserPorts(port) {
   const portInstructions = document.querySelector("#port-instructions");
   const portList = document.querySelector("#port-list");
 
   const ul = portList.querySelector("ul") || document.createElement("ul");
-  
+
   const li = document.createElement("li");
   li.textContent = `Port: ${port.toUpperCase()}`;
   ul.appendChild(li);
 
-  // Append the updated list to the portList element
   portList.appendChild(ul);
 
-  // Update the port instructions based on how many more ports need to be entered
   const remainingPorts = maxPorts - itinerary.ports.length;
   if (remainingPorts > 0) {
     portInstructions.textContent = `Please enter ${remainingPorts} more ${remainingPorts === 1 ? "port" : "ports"}.`;
   } else {
     portInstructions.textContent = "All ports have been entered, please press done and then set sail";
+    const ship = new Ship(itinerary);
+    const controller = new Controller(ship);
+    controller.renderPorts(itinerary.ports);
+    controller.renderShip();
+    const sailButton = document.querySelector("#sailbutton");
+    sailButton.disabled = false;
   }
 }
 
-
-
-
-
-    addPortButton.addEventListener("click", function(event) {
-    const newPort = document.querySelector("#newPortName");
-    const headsUpBoard = document.querySelector("#headsUpBoard");
-    if (newPort.value) {
-        const port = new Port(newPort.value);
-        itinerary.ports.push(port);
-        const delimiter = itinerary.ports.length === maxPorts ? "." : ", ";
-        headsUpBoard.innerHTML += `${port.name.toUpperCase()}${delimiter}`;
-        showUserPorts(newPort.value);
-        newPort.value = "";
-    } else {
-        alert("Please enter a port name and press add");
-    }
-    event.preventDefault();
+addPortButton.addEventListener("click", function(event) {
+  const newPort = document.querySelector("#newPortName");
+  const headsUpBoard = document.querySelector("#headsUpBoard");
+  if (newPort.value) {
+    const port = new Port(newPort.value);
+    itinerary.ports.push(port);
+    const delimiter = itinerary.ports.length === maxPorts ? "." : ", ";
+    headsUpBoard.innerHTML += `${port.name.toUpperCase()}${delimiter}`;
+    showUserPorts(newPort.value);
+    newPort.value = "";
+  } else {
+    alert("Please enter a port name and press add");
+  }
+  event.preventDefault();
 }, false);
 
-    const noMorePortsButton = document.querySelector("#noMorePorts");
-    noMorePortsButton.addEventListener("click", function(event) {
-    if (itinerary.ports.length < maxPorts) {
-        alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
-    } else {
-        const ship = new Ship(itinerary);
-        const controller = new Controller(ship);
-        controller.renderPorts(itinerary.ports);
-        controller.renderShip();
-        const addPortButton = document.querySelector("#addPort");
-        addPortButton.disabled = true;
-        noMorePortsButton.disabled = true;
-    }
-    event.preventDefault();
-    }, false);
+const sailButton = document.querySelector("#sailbutton");
+sailButton.addEventListener("click", function(event) {
+  if (itinerary.ports.length < maxPorts) {
+    alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
+  } else {
+    const ship = new Ship(itinerary);
+    const controller = new Controller(ship);
+    controller.setSail();
+    sailButton.disabled = true;
+  }
+  event.preventDefault();
+}, false);
 
-    const reloadPageButton = document.querySelector("#reloadPage");
-    reloadPageButton.addEventListener("click", () => { location.reload(); })
+const reloadPageButton = document.querySelector("#reloadPage");
+reloadPageButton.addEventListener("click", () => { location.reload(); });
+
 </script>
 </body>
 
