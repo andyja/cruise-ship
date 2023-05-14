@@ -17,20 +17,21 @@
 <body>
     <div class="header">
         <div class="header-column">
-            <form>
+            <form class="set-itinerary">
                 <label>Add Ports</label><br></br>
                 <input type="text" id="newPortName" placeholder="....type a port name here"><br></br>
                 <button type="button" class="btn" id="addPort">add</button>
+                <button type="button" class="btn" id="noMorePorts">done</button><br></br>
                 <button type="button" class="btn" id="reloadPage">Reset itinerary</button>
             </form>
         </div>
         <div class="header-column">
             <div>
             <p id="port-instructions">Please enter three ports</p>
-            <ul id="port-list"></ul>
+            <div id="port-list"></div>
             </div>
             </div>
-        </div>
+    </div>
     <div id="headsUpBoard">Itinerary:</div>
     <div id="mainContainer">
     <div id="viewport">
@@ -38,80 +39,89 @@
         <div id="portNames"></div>
         <div id = "ship"></div>
     </div>
-        <button class="btn" id="sailbutton" disabled>Sail</button>
+        <button class="btn" id="sailbutton">Sail</button>
     </div>
     <script src="src/Itinerary.js"></script>
     <script src="src/Ship.js"></script>
     <script src="src/Port.js"></script>
     <script src="src/Controller.js"></script>
 <script>
+
+
     const maxPorts = 3;
 
-const itinerary = new Itinerary([]);
-const addPortButton = document.querySelector("#addPort");
+    const itinerary = new Itinerary([]);
+    const addPortButton = document.querySelector("#addPort");
+    let listIsAdded = false;
 
-let listIsAdded = false;
 
 function showUserPorts(port) {
-  const portInstructions = document.querySelector("#port-instructions");
-  const portList = document.querySelector("#port-list");
+        const portInstructions = document.querySelector("#port-instructions");
+        const portList = document.querySelector("#port-list");
 
-  const ul = portList.querySelector("ul") || document.createElement("ul");
+        const ul = document.createElement("ul");
+        portInstructions.textContent = `Please enter ${maxPorts - itinerary.ports.length}, more ports`;
+        if (itinerary.ports.length) {
+            portList.appendChild(ul);
+            listIsAdded = true;
+        }
+        const li = document.createElement("li");
+        li.textContent = `Port: ${port.toUpperCase()}`;
+        ul.appendChild(li);
+    }
+    
+    addPortButton.addEventListener("click", function(event) {
+        const headsUpBoard = document.querySelector("#headsUpBoard");
+        const newPort = document.querySelector("#newPortName");
+        
+        if (newPort.value) {
+            const port = new Port(newPort.value);
+            itinerary.ports.push(port);
+            const delimiter = itinerary.ports.length === maxPorts ? "." : ", ";
+            headsUpBoard.innerHTML += `${port.name.toUpperCase()}${delimiter}`;
+            showUserPorts(newPort.value);
+            newPort.value = "";
+         } else {
+            alert("Please enter a port name and press add");
+        }
+        event.preventDefault();
+    }, false);
 
-  const li = document.createElement("li");
-  li.textContent = `Port: ${port.toUpperCase()}`;
-  ul.appendChild(li);
+    const noMorePortsButton = document.querySelector("#noMorePorts");
+    noMorePortsButton.addEventListener("click", function(event) {
+    if (itinerary.ports.length < maxPorts) {
+        alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
+    } else {
+        const ship = new Ship(itinerary);
+        const controller = new Controller(ship);
+        controller.renderPorts(itinerary.ports);
+        controller.renderShip();
+        const addPortButton = document.querySelector("#addPort");
+        addPortButton.disabled = true;
+        noMorePortsButton.disabled = true;
+    }
+    event.preventDefault();
+    }, false);
 
-  portList.appendChild(ul);
+// The following is to make the sail btn also the "done" btn
+//     const sailButton = document.querySelector("#sailbutton");
+// sailButton.addEventListener("click", function(event) {
+//   if (itinerary.ports.length < maxPorts) {
+//     alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
+//   } else {
+//     const ship = new Ship(itinerary);
+//     const controller = new Controller(ship);
+//     const addPortButton = document.querySelector("#addPort");
+//     controller.renderPorts(itinerary.ports);
+//     controller.renderShip();
+//     controller.setSail();
+//     sailButton.disabled = true;
+//   }
+//   event.preventDefault();
+// }, false);
 
-  const remainingPorts = maxPorts - itinerary.ports.length;
-  if (remainingPorts > 0) {
-    portInstructions.textContent = `Please enter ${remainingPorts} more ${remainingPorts === 1 ? "port" : "ports"}.`;
-    sailButton.disabled = true;
-  } else {
-    portInstructions.textContent = "All ports have been entered, press sail to depart";
-    const ship = new Ship(itinerary);
-    const controller = new Controller(ship);
-    controller.renderPorts(itinerary.ports);
-    controller.renderShip();
-    const sailButton = document.querySelector("#sailbutton");
-    sailButton.disabled = false;
-  }
-}
-
-addPortButton.addEventListener("click", function(event) {
-  const newPort = document.querySelector("#newPortName");
-  const headsUpBoard = document.querySelector("#headsUpBoard");
-  if (newPort.value) {
-    const port = new Port(newPort.value);
-    itinerary.ports.push(port);
-    console.log(itinerary.ports)
-    const delimiter = itinerary.ports.length === maxPorts ? "." : ", ";
-    headsUpBoard.innerHTML += `${port.name.toUpperCase()}${delimiter}`;
-    showUserPorts(newPort.value);
-    newPort.value = "";
-  } else {
-    alert("Please enter a port name and press add");
-  }
-  event.preventDefault();
-}, false);
-
-const sailButton = document.querySelector("#sailbutton");
-sailButton.addEventListener("click", function(event) {
-  if (itinerary.ports.length < maxPorts) {
-    alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
-  } else {
-    const ship = new Ship(itinerary);
-    const controller = new Controller(ship);
-    controller.setSail();
-    sailButton.disabled = true;
-  }
-  event.preventDefault();
-}, false);
-
-const reloadPageButton = document.querySelector("#reloadPage");
-reloadPageButton.addEventListener("click", () => { location.reload(); });
-
+    const reloadPageButton = document.querySelector("#reloadPage");
+    reloadPageButton.addEventListener("click", () => { location.reload(); })
 </script>
 </body>
 
