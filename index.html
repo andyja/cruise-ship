@@ -38,7 +38,7 @@
         <div id="portNames"></div>
         <div id = "ship"></div>
     </div>
-        <button class="btn" id="sailbutton">Sail</button>
+        <button class="btn" id="sailbutton" disabled>Sail</button>
     </div>
     <script src="src/Itinerary.js"></script>
     <script src="src/Ship.js"></script>
@@ -67,8 +67,9 @@ function showUserPorts(port) {
   const remainingPorts = maxPorts - itinerary.ports.length;
   if (remainingPorts > 0) {
     portInstructions.textContent = `Please enter ${remainingPorts} more ${remainingPorts === 1 ? "port" : "ports"}.`;
+    sailButton.disabled = true;
   } else {
-    portInstructions.textContent = "All ports have been entered, please press done and then set sail";
+    portInstructions.textContent = "All ports have been entered, press sail to depart";
     const ship = new Ship(itinerary);
     const controller = new Controller(ship);
     controller.renderPorts(itinerary.ports);
@@ -84,6 +85,7 @@ addPortButton.addEventListener("click", function(event) {
   if (newPort.value) {
     const port = new Port(newPort.value);
     itinerary.ports.push(port);
+    console.log(itinerary.ports)
     const delimiter = itinerary.ports.length === maxPorts ? "." : ", ";
     headsUpBoard.innerHTML += `${port.name.toUpperCase()}${delimiter}`;
     showUserPorts(newPort.value);

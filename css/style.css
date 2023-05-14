@@ -1,7 +1,6 @@
 :root {
     height:100%;
     width: 100%;
-    background-image: url("images/nenad-radojcic-RF5U8BkaQHU-unsplash.jpg");
     background-size: cover;
 }
 
@@ -174,8 +173,6 @@ label {
 #newPortName {
     width: 200px;
 }
-
-// once we get to 768 then below active......
 @media screen and (min-width: 768px) {
     #mainContainer{
         padding-bottom: 150px;

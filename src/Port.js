@@ -15,6 +15,7 @@ removeShip(shipThatHasSetSail){
 
     const currentIndex = this.ships.indexOf(shipThatHasSetSail);
     if (currentIndex > -1){
+        console.log("hello")
         this.ships.splice(currentIndex, 1);
     };
 };
