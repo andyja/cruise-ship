@@ -52,27 +52,26 @@
     let listIsAdded = false;
 
 function showUserPorts(port) {
-        const portInstructions = document.querySelector("#port-instructions");
-        const portList = document.querySelector("#port-list");
-        const ul = document.createElement("ul");
-        portInstructions.textContent = `Please enter ${maxPorts - itinerary.ports.length}, more ports`;
-        if (itinerary.ports.length) {
-            portList.appendChild(ul);
-            listIsAdded = true;
-        }
-        const li = document.createElement("li");
-        li.textContent = `Port: ${port.toUpperCase()}`;
-        ul.appendChild(li);
-        if (itinerary.ports.length === maxPorts){
-                const ship = new Ship(itinerary);
-    const controller = new Controller(ship);
-    const addPortButton = document.querySelector("#addPort");
-    controller.renderPorts(itinerary.ports);
-    controller.renderShip();
-
-        }
+    const portInstructions = document.querySelector("#port-instructions");
+    const portList = document.querySelector("#port-list");
+    const ul = document.createElement("ul");
+    portInstructions.textContent = `Please enter ${maxPorts - itinerary.ports.length}, more ports`;
+    if (itinerary.ports.length) {
+        portList.appendChild(ul);
+        listIsAdded = true;
     }
-    
+    const li = document.createElement("li");
+    li.textContent = `Port: ${port.toUpperCase()}`;
+    ul.appendChild(li);
+    if (itinerary.ports.length === maxPorts){
+        const ship = new Ship(itinerary);
+        const controller = new Controller(ship);
+        const addPortButton = document.querySelector("#addPort");
+        controller.renderPorts(itinerary.ports);
+        controller.renderShip();
+        addPortButton.disabled = true;
+    }
+}   
     addPortButton.addEventListener("click", function(event) {
         const headsUpBoard = document.querySelector("#headsUpBoard");
         const newPort = document.querySelector("#newPortName");
