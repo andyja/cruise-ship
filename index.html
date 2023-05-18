@@ -5,8 +5,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="icon" href="images/ship.png" type="image/x-icon">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sen:wght@400;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,79 +26,79 @@
         </div>
         <div class="header-column">
             <div>
-            <p id="port-instructions">Please enter three ports</p>
-            <div id="port-list"></div>
+                <p id="port-instructions">Please enter three ports</p>
+                <div id="port-list"></div>
             </div>
-            </div>
-    </div>
+        </div>
+    </div>    
     <div id="headsUpBoard">Itinerary:</div>
     <div id="mainContainer">
-    <div id="viewport">
-        <div id="ports"></div>
-        <div id="portNames"></div>
-        <div id = "ship"></div>
-    </div>
+        <div id="viewport">
+            <div id="ports"></div>
+            <div id="portNames"></div>
+            <div id="ship"></div>
+        </div>
         <button class="btn" id="sailbutton">Sail</button>
     </div>
     <script src="src/Itinerary.js"></script>
     <script src="src/Ship.js"></script>
     <script src="src/Port.js"></script>
     <script src="src/Controller.js"></script>
-<script>
-
-    const maxPorts = 3;
-    const itinerary = new Itinerary([]);
-    const addPortButton = document.querySelector("#addPort");
-    let listIsAdded = false;
-
-function showUserPorts(port) {
-    const portInstructions = document.querySelector("#port-instructions");
-    const portList = document.querySelector("#port-list");
-    const ul = document.createElement("ul");
-    portInstructions.textContent = `Please enter ${maxPorts - itinerary.ports.length}, more ports`;
-    if (itinerary.ports.length) {
-        portList.appendChild(ul);
-        listIsAdded = true;
-    }
-    const li = document.createElement("li");
-    li.textContent = `Port: ${port.toUpperCase()}`;
-    ul.appendChild(li);
-    if (itinerary.ports.length === maxPorts){
-        const ship = new Ship(itinerary);
-        const controller = new Controller(ship);
+    <script>
+        const maxPorts = 3;
+        const itinerary = new Itinerary([]);
         const addPortButton = document.querySelector("#addPort");
-        controller.renderPorts(itinerary.ports);
-        controller.renderShip();
-        addPortButton.disabled = true;
-    }
-}   
-    addPortButton.addEventListener("click", function(event) {
-        const headsUpBoard = document.querySelector("#headsUpBoard");
-        const newPort = document.querySelector("#newPortName");
-        
-        if (newPort.value) {
-            const port = new Port(newPort.value);
-            itinerary.ports.push(port);
-            const delimiter = itinerary.ports.length === maxPorts ? "." : ", ";
-            headsUpBoard.innerHTML += `${port.name.toUpperCase()}${delimiter}`;
-            showUserPorts(newPort.value);
-            newPort.value = "";
-         } 
-         else {
-            alert("Please enter a port name and press add");
-        }
-        event.preventDefault();
-    }, false);
+        let listIsAdded = false;
 
-    const sailButton = document.querySelector("#sailbutton");
-    sailButton.addEventListener("click", function(event) {
-    if (itinerary.ports.length < maxPorts) {
-    alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
-    } 
-    event.preventDefault();
-    }, false);
-    const reloadPageButton = document.querySelector("#reloadPage");
-    reloadPageButton.addEventListener("click", () => { location.reload(); })
-</script>
+        function showUserPorts(port) {
+            const portInstructions = document.querySelector("#port-instructions");
+            const portList = document.querySelector("#port-list");
+            const ul = document.createElement("ul");
+            portInstructions.textContent = `Please enter ${maxPorts - itinerary.ports.length}, more ports`;
+            if (itinerary.ports.length) {
+                portList.appendChild(ul);
+                listIsAdded = true;
+            }
+            const li = document.createElement("li");
+            li.textContent = `Port: ${port.toUpperCase()}`;
+            ul.appendChild(li);
+            if (itinerary.ports.length === maxPorts) {
+                const ship = new Ship(itinerary);
+                const controller = new Controller(ship);
+                const addPortButton = document.querySelector("#addPort");
+                controller.renderPorts(itinerary.ports);
+                controller.renderShip();
+                addPortButton.disabled = true;
+            }
+        }
+
+        addPortButton.addEventListener("click", function(event) {
+            const headsUpBoard = document.querySelector("#headsUpBoard");
+            const newPort = document.querySelector("#newPortName");
+
+            if (newPort.value) {
+                const port = new Port(newPort.value);
+                itinerary.ports.push(port);
+                const delimiter = itinerary.ports.length === maxPorts ? "." : ", ";
+                headsUpBoard.innerHTML += `${port.name.toUpperCase()}${delimiter}`;
+                showUserPorts(newPort.value);
+                newPort.value = "";
+            } else {
+                alert("Please enter a port name and press add");
+            }
+            event.preventDefault();
+        }, false);
+
+        const sailButton = document.querySelector("#sailbutton");
+        sailButton.addEventListener("click", function(event) {
+            if (itinerary.ports.length < maxPorts) {
+                alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
+            } 
+            event.preventDefault();
+        }, false);
+
+        const reloadPageButton = document.querySelector("#reloadPage");
+        reloadPageButton.addEventListener("click", () => { location.reload(); });
+    </script>
 </body>
 </html>
