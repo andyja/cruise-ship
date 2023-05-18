@@ -21,7 +21,6 @@
                 <label>Add Ports</label><br></br>
                 <input type="text" id="newPortName" placeholder="....type a port name here"><br></br>
                 <button type="button" class="btn" id="addPort">add</button>
-                <button type="button" class="btn" id="noMorePorts">done</button><br></br>
                 <button type="button" class="btn" id="reloadPage">Reset itinerary</button>
             </form>
         </div>
@@ -47,18 +46,14 @@
     <script src="src/Controller.js"></script>
 <script>
 
-
     const maxPorts = 3;
-
     const itinerary = new Itinerary([]);
     const addPortButton = document.querySelector("#addPort");
     let listIsAdded = false;
 
-
 function showUserPorts(port) {
         const portInstructions = document.querySelector("#port-instructions");
         const portList = document.querySelector("#port-list");
-
         const ul = document.createElement("ul");
         portInstructions.textContent = `Please enter ${maxPorts - itinerary.ports.length}, more ports`;
         if (itinerary.ports.length) {
@@ -68,6 +63,14 @@ function showUserPorts(port) {
         const li = document.createElement("li");
         li.textContent = `Port: ${port.toUpperCase()}`;
         ul.appendChild(li);
+        if (itinerary.ports.length === maxPorts){
+                const ship = new Ship(itinerary);
+    const controller = new Controller(ship);
+    const addPortButton = document.querySelector("#addPort");
+    controller.renderPorts(itinerary.ports);
+    controller.renderShip();
+
+        }
     }
     
     addPortButton.addEventListener("click", function(event) {
@@ -81,44 +84,20 @@ function showUserPorts(port) {
             headsUpBoard.innerHTML += `${port.name.toUpperCase()}${delimiter}`;
             showUserPorts(newPort.value);
             newPort.value = "";
-         } else {
+         } 
+         else {
             alert("Please enter a port name and press add");
         }
         event.preventDefault();
     }, false);
 
-    const noMorePortsButton = document.querySelector("#noMorePorts");
-    noMorePortsButton.addEventListener("click", function(event) {
+    const sailButton = document.querySelector("#sailbutton");
+    sailButton.addEventListener("click", function(event) {
     if (itinerary.ports.length < maxPorts) {
-        alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
-    } else {
-        const ship = new Ship(itinerary);
-        const controller = new Controller(ship);
-        controller.renderPorts(itinerary.ports);
-        controller.renderShip();
-        const addPortButton = document.querySelector("#addPort");
-        addPortButton.disabled = true;
-        noMorePortsButton.disabled = true;
-    }
+    alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
+    } 
     event.preventDefault();
     }, false);
-
-// The following is to make the sail btn also the "done" btn
-//     const sailButton = document.querySelector("#sailbutton");
-// sailButton.addEventListener("click", function(event) {
-//   if (itinerary.ports.length < maxPorts) {
-//     alert(`${maxPorts - itinerary.ports.length} additional ports are required`);
-//   } else {
-//     const ship = new Ship(itinerary);
-//     const controller = new Controller(ship);
-//     const addPortButton = document.querySelector("#addPort");
-//     controller.renderPorts(itinerary.ports);
-//     controller.renderShip();
-//     controller.setSail();
-//     sailButton.disabled = true;
-//   }
-//   event.preventDefault();
-// }, false);
     const reloadPageButton = document.querySelector("#reloadPage");
     reloadPageButton.addEventListener("click", () => { location.reload(); })
 </script>
